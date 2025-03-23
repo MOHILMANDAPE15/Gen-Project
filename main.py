@@ -7,6 +7,11 @@ from langchain.schema import SystemMessage, HumanMessage, AIMessage
 from file_uploader import handle_file_upload
 from file_parser import parsing
 from embeddings import embed_store, load_index, query_index
+import asyncio
+try:
+    asyncio.get_running_loop()
+except RuntimeError:
+    asyncio.run(asyncio.sleep(0))
 
 def init():
     st.set_page_config(page_title="Self-Made GPT", page_icon="🧊")
