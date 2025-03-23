@@ -8,10 +8,9 @@ from file_uploader import handle_file_upload
 from file_parser import parsing
 from embeddings import embed_store, load_index, query_index
 import asyncio
-try:
-    asyncio.get_running_loop()
-except RuntimeError:
-    asyncio.run(asyncio.sleep(0))
+import sqlite3
+asyncio.set_event_loop(asyncio.new_event_loop())
+
 
 def init():
     st.set_page_config(page_title="Self-Made GPT", page_icon="🧊")
@@ -43,7 +42,12 @@ def main():
             st.success("Embeddings created and stored!")
 
     if "index" not in st.session_state:
-        st.session_state.index = load_index()  # ✅ Load index if it exists
+        sqlite_version = sqlite3.sqlite_version_info
+        if sqlite_version < (3, 35, 0):
+            st.warning("SQLite version is too old for ChromaDB. File search is disabled.")
+            st.session_state.index = None  # Prevents crashes
+        else:
+            st.session_state.index = load_index()  # ✅ Load index if it exists
 
     user_input = st.text_input("Your message:", key="user_input")
 
