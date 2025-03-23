@@ -1,5 +1,5 @@
 actionlib==1.12.1
-<<<<<<< HEAD
+
 angles==1.9.12
 appdirs==1.4.4
 atomicwrites==1.4.0
@@ -15,7 +15,7 @@ diagnostic_common_diagnostics==1.9.7
 diagnostic_updater==1.9.7
 dynamic_reconfigure==1.6.5
 faiss==1.9.0
-=======
+
 aiobotocore==2.21.1
 aiohappyeyeballs==2.6.1
 aiohttp==3.11.14
@@ -73,7 +73,7 @@ genlisp==0.4.16
 genmsg==0.5.17
 gennodejs==2.0.1
 genpy==0.6.16
-<<<<<<< HEAD
+
 image_geometry==1.13.1
 interactive-markers==1.11.5
 jiter==0.8.2
@@ -91,7 +91,7 @@ pyls-spyder==0.4.0
 PyQt5==5.15.10
 PyQtWebEngine==5.15.6
 python_qt_binding==0.4.4
-=======
+
 gitdb==4.0.12
 GitPython==3.1.44
 google-auth==2.38.0
@@ -220,9 +220,9 @@ qt-dotgraph==0.4.2
 qt-gui==0.4.2
 qt-gui-cpp==0.4.2
 qt-gui-py-common==0.4.2
-<<<<<<< HEAD
+
 resource_retriever==1.12.7
-=======
+
 referencing==0.36.2
 regex==2024.11.6
 requests==2.32.3
@@ -251,8 +251,7 @@ rostest==1.14.13
 rostopic==1.14.13
 rosunit==1.14.9
 roswtf==1.14.13
-<<<<<<< HEAD
-=======
+
 rpds-py==0.23.1
 >>>>>>> 0d72dde (Fixed broken dependency)
 rqt-image-view==0.4.17
@@ -287,14 +286,14 @@ rqt_tf_tree==0.6.0
 rqt_top==0.4.8
 rqt_topic==0.4.11
 rqt_web==0.4.8
-<<<<<<< HEAD
+
 rviz==1.13.30
 sensor-msgs==1.12.8
 setuptools==75.1.0
 smach==2.0.3
 smach_ros==2.0.3
 smclib==1.8.5
-=======
+
 rsa==4.9
 rviz==1.13.30
 safetensors==0.5.3
@@ -325,12 +324,12 @@ tf2_kdl==0.6.5
 tf2_py==0.6.5
 tf2_ros==0.6.5
 tf_conversions==1.12.1
-<<<<<<< HEAD
+
 topic_tools==1.14.13
 urdfdom-py==0.4.6
 wheel==0.44.0
 xacro==1.13.20
-=======
+
 threadpoolctl==3.6.0
 tiktoken==0.9.0
 tokenizers==0.21.1
