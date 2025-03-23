@@ -6,25 +6,38 @@ from langchain_groq import ChatGroq
 from langchain.schema import SystemMessage, HumanMessage, AIMessage
 from file_uploader import handle_file_upload
 from file_parser import parsing
-from embeddings import embed_store, load_index, query_index
 import asyncio
 import sqlite3
+
+# Set event loop (Fix for Streamlit async issues)
 asyncio.set_event_loop(asyncio.new_event_loop())
+
+# Handle ChromaDB Import (Avoid crashes if missing)
+try:
+    from embeddings import embed_store, load_index, query_index
+    chromadb_available = True
+except ImportError:
+    st.warning("ChromaDB is unavailable. File search will be disabled.")
+    chromadb_available = False
 
 
 def init():
+    """Initialize the app and check for API key."""
     st.set_page_config(page_title="Self-Made GPT", page_icon="🧊")
     load_dotenv()
     api_key = os.getenv("GROQ_API_KEY")
 
     if not api_key:
-        st.error("Please set the environment variable GROQ_API_KEY in .env")
-        st.stop()
+        api_key = st.text_input("Enter your GROQ API Key:", type="password")
+        if not api_key:
+            st.error("API key is required to proceed!")
+            st.stop()
+
 
 def main():
     init()
     st.title("Self-Made GPT")
-    
+
     llm = ChatGroq(model_name="llama3-70b-8192", temperature=0.5)
 
     if "msg_history" not in st.session_state:
@@ -33,29 +46,41 @@ def main():
     st.sidebar.header("File Upload")
     file_paths = handle_file_upload()
 
-    if file_paths:
+    if file_paths and chromadb_available:
         nodes = parsing()
 
         if nodes:
-            st.write("Creating embeddings and storing in chromadb..")
+            st.write("Creating embeddings and storing in ChromaDB...")
             st.session_state.index = embed_store(nodes)  # ✅ Store index in session
             st.success("Embeddings created and stored!")
 
+    # ChromaDB Index Handling
     if "index" not in st.session_state:
-        sqlite_version = sqlite3.sqlite_version_info
-        if sqlite_version < (3, 35, 0):
-            st.warning("SQLite version is too old for ChromaDB. File search is disabled.")
-            st.session_state.index = None  # Prevents crashes
+        if chromadb_available:
+            sqlite_version = sqlite3.sqlite_version_info
+            if sqlite_version < (3, 35, 0):
+                st.warning("SQLite version is too old for ChromaDB. File search is disabled.")
+                st.session_state.index = None  # Prevents crashes
+            else:
+                try:
+                    st.session_state.index = load_index()  # ✅ Load index if it exists
+                except Exception:
+                    st.warning("Failed to load ChromaDB index. File-based search is disabled.")
+                    st.session_state.index = None
         else:
-            st.session_state.index = load_index()  # ✅ Load index if it exists
+            st.session_state.index = None
 
     user_input = st.text_input("Your message:", key="user_input")
 
     if user_input:
         st.session_state.msg_history.append(HumanMessage(content=user_input))
 
-        relevant_nodes = query_index(st.session_state.index, user_input, top_k=5)
-        context = "\n".join(relevant_nodes)
+        # Handle query safely (Skip if ChromaDB is unavailable)
+        context = ""
+        if st.session_state.index:
+            relevant_nodes = query_index(st.session_state.index, user_input, top_k=5)
+            context = "\n".join(relevant_nodes)
+
         response = llm.invoke([
             SystemMessage(content="You are a helpful assistant."),
             HumanMessage(content=f"Context: {context}\n\nQuestion: {user_input}"),
@@ -77,6 +102,7 @@ def main():
             message(msg.content, is_user=True, key=f"user_{i}")
         elif isinstance(msg, AIMessage):
             message(msg.content, key=f"bot_{i}")
+
 
 if __name__ == "__main__":
     main()
