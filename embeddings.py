@@ -1,6 +1,17 @@
 from langchain.embeddings import HuggingFaceEmbeddings
 import os
 import uuid  # ✅ Generate unique IDs for each document
+import os
+
+# Force ChromaDB to use system SQLite
+os.environ["LD_LIBRARY_PATH"] = "/usr/lib"
+
+try:
+    import chromadb
+    chromadb_available = True
+except ImportError:
+    print("⚠️ ChromaDB import failed. Disabling embeddings.")
+    chromadb_available = False
 
 # Try importing ChromaDB, handle failures
 try:
