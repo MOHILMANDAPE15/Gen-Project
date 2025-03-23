@@ -64,7 +64,6 @@ filetype==1.2.0
 flatbuffers==25.2.10
 frozenlist==1.5.0
 fsspec==2025.3.0
->>>>>>> 0d72dde (Fixed broken dependency)
 gazebo_plugins==2.8.7
 gazebo_ros==2.8.7
 gencpp==0.6.6
@@ -215,7 +214,6 @@ python-dotenv==1.0.1
 python_qt_binding==0.4.4
 pytz==2025.1
 PyYAML==6.0.2
->>>>>>> 0d72dde (Fixed broken dependency)
 qt-dotgraph==0.4.2
 qt-gui==0.4.2
 qt-gui-cpp==0.4.2
@@ -230,7 +228,6 @@ requests-oauthlib==2.0.0
 requests-toolbelt==1.0.0
 resource_retriever==1.12.7
 rich==13.9.4
->>>>>>> 0d72dde (Fixed broken dependency)
 rosbag==1.14.13
 rosboost-cfg==1.14.9
 rosclean==1.14.9
@@ -253,7 +250,6 @@ rosunit==1.14.9
 roswtf==1.14.13
 
 rpds-py==0.23.1
->>>>>>> 0d72dde (Fixed broken dependency)
 rqt-image-view==0.4.17
 rqt-moveit==0.5.10
 rqt-reconfigure==0.5.4
@@ -317,7 +313,6 @@ streamlit-chat==0.1.1
 striprtf==0.0.26
 sympy==1.13.1
 tenacity==9.0.0
->>>>>>> 0d72dde (Fixed broken dependency)
 tf==1.12.1
 tf2_geometry_msgs==0.6.5
 tf2_kdl==0.6.5
@@ -357,4 +352,3 @@ xacro==1.13.20
 yarl==1.18.3
 zipp==3.21.0
 zstandard==0.23.0
->>>>>>> 0d72dde (Fixed broken dependency)
