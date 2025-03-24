@@ -7,6 +7,7 @@ def handle_file_upload():
     if not os.path.exists(UPLOADS_DIR):
         os.makedirs(UPLOADS_DIR)
 
+    # Ensure only one uploader instance is created
     if "uploaded_files" not in st.session_state:
         st.session_state.uploaded_files = []
 
@@ -14,7 +15,7 @@ def handle_file_upload():
         "Upload files (PDF, TXT, DOCX)", 
         type=["pdf", "txt", "docx"], 
         accept_multiple_files=True,
-        key="file_uploader_main"  
+        key="file_uploader_main"  # ✅ Unique key
     )
 
     if uploaded_files:
