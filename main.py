@@ -38,7 +38,7 @@ def main():
             st.success("Embeddings created and stored!")
 
     if "index" not in st.session_state:
-        st.session_state.index = load_index()  # ✅ Load index if it exists
+        st.session_state.index = load_index()  
 
     user_input = st.text_input("Your message:", key="user_input")
 
