@@ -7,7 +7,6 @@ CHROMA_PATH = "./chroma_db"
 def embed_store(nodes):
     hf_embeddings = HuggingFaceEmbeddings(model_name="BAAI/bge-small-en-v1.5")
 
-    # ✅ Extract actual text content from nodes
     documents = []
     for node in nodes:
         if hasattr(node, "text"):
@@ -17,19 +16,16 @@ def embed_store(nodes):
         elif isinstance(node, str):
             documents.append(node)
         else:
-            print(f"⚠️ Warning: Unrecognized node type {type(node)}, skipping.")
+            print(f" Warning: Unrecognized node type {type(node)}, skipping.")
 
     if not documents:
         raise ValueError("No valid text data found in nodes!")
 
-    # ✅ Initialize ChromaDB
     chroma_client = chromadb.PersistentClient(path=CHROMA_PATH)
     collection = chroma_client.get_or_create_collection(name="chroma_collection")
 
-    # Generate embeddings
     embeddings = hf_embeddings.embed_documents(documents)
 
-    # Add to ChromaDB
     collection.add(
         ids=[str(i) for i in range(len(documents))],  # Unique IDs
         documents=documents,
