@@ -1,8 +1,8 @@
 # Gen-Project
 
-# Self-Made GPT
+# DocMate
 
-Welcome to Self-Made GPT! This is a chatbot project I built using Streamlit and Groq's LLaMA 3 model. It allows users to upload files, generate embeddings, and query them to make responses more intelligent and context-aware.
+Welcome to DocMate! This is a chatbot project I built using Streamlit and Groq's LLaMA 3 model. It allows users to upload files, generate embeddings, and query them to make responses more intelligent and context-aware.
 
 ## What This Project Does
 - Uses the `llama3-70b-8192` model for smart conversations.
