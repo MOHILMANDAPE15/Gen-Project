@@ -24,7 +24,6 @@ def parsing():
         st.warning("No files uploaded.")
         return []
 
-    # Track already processed files
     processed_files = st.session_state.get("processed_files", set())
     new_files = [file for file in file_paths if file not in processed_files]
 
@@ -39,14 +38,14 @@ def parsing():
         st.write(f"Processing new file: {file_path}")
         docs = parser.load_data(file_path)
         processed_docs.extend(docs)
-        os.remove(file_path)  # ✅ Remove only newly processed file
-        processed_files.add(file_path)  # ✅ Mark as processed
+        os.remove(file_path) 
+        processed_files.add(file_path) 
 
     st.session_state.uploaded_files = []
-    st.session_state.processed_files = processed_files  # ✅ Store processed files
+    st.session_state.processed_files = processed_files  
     st.write("Processing complete!")
 
-    # Chunking and extracting
+ 
     llm = Groq(model='llama3-70b-8192', api_key=groq_key)
     text_splitter = SentenceSplitter(separator=" ", chunk_size=1024, chunk_overlap=128)
     title_extractor = TitleExtractor(llm=llm, nodes=5)
@@ -55,6 +54,5 @@ def parsing():
     pipeline = IngestionPipeline(transformations=[text_splitter, title_extractor, qa_extractor])
     nodes = pipeline.run(documents=processed_docs, in_place=True, show_progress=True)
 
-    # ✅ Store parsed nodes in session state
     st.session_state.processed_nodes = st.session_state.get("processed_nodes", []) + nodes
     return st.session_state.processed_nodes
