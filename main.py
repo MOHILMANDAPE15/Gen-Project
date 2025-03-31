@@ -9,7 +9,7 @@ from file_parser import parsing
 from embeddings import embed_store, load_index, query_index
 
 def init():
-    st.set_page_config(page_title="Self-Made GPT", page_icon="🧊")
+    st.set_page_config(page_title="DocMate", page_icon="🧊")
     load_dotenv()
     api_key = os.getenv("GROQ_API_KEY")
 
